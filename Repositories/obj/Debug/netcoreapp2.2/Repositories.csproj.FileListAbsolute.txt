@@ -1,0 +1,14 @@
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\bin\Debug\netcoreapp2.2\Repositories.deps.json
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\bin\Debug\netcoreapp2.2\Repositories.dll
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\bin\Debug\netcoreapp2.2\Repositories.pdb
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\bin\Debug\netcoreapp2.2\Contracts.dll
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\bin\Debug\netcoreapp2.2\Contracts.pdb
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\obj\Debug\netcoreapp2.2\Repositories.csprojAssemblyReference.cache
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\obj\Debug\netcoreapp2.2\Repositories.csproj.CoreCompileInputs.cache
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\obj\Debug\netcoreapp2.2\Repositories.AssemblyInfoInputs.cache
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\obj\Debug\netcoreapp2.2\Repositories.AssemblyInfo.cs
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\obj\Debug\netcoreapp2.2\Repositories.csproj.CopyComplete
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\obj\Debug\netcoreapp2.2\Repositories.dll
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\obj\Debug\netcoreapp2.2\Repositories.pdb
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\bin\Debug\netcoreapp2.2\Entities.dll
+C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Repositories\bin\Debug\netcoreapp2.2\Entities.pdb
