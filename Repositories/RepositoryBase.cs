@@ -21,12 +21,12 @@ namespace Repositories
 
         public IQueryable<T> GetAll()
         {
-            return _repositoryContext.Set<T>();
+            return _repositoryContext.Set<T>().AsNoTracking();
         }
 
         public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
         {
-            return _repositoryContext.Set<T>().Where(expression);
+            return _repositoryContext.Set<T>().Where(expression).AsNoTracking();
         }
 
         public void Add(T entity)

@@ -1,4 +1,3 @@
-C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Entities\obj\Debug\netcoreapp2.2\Entities.csprojAssemblyReference.cache
 C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Entities\obj\Debug\netcoreapp2.2\Entities.csproj.CoreCompileInputs.cache
 C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Entities\obj\Debug\netcoreapp2.2\Entities.AssemblyInfoInputs.cache
 C:\Users\Maverick\OneDrive\GitHub Repositories\scheduler\Entities\obj\Debug\netcoreapp2.2\Entities.AssemblyInfo.cs

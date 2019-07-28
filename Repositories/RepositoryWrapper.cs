@@ -1,4 +1,5 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
 using Entities;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,12 @@ namespace Repositories
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
-        public RepositoryWrapper(RepositoryContext repositoryContext)
+        public RepositoryWrapper(RepositoryContext repositoryContext, IMapper mapper)
         {
             repoContext = repositoryContext;
+            Mapper = mapper;
         }
+        private readonly IMapper Mapper;
 
         private RepositoryContext repoContext;
         private IUserRepository user;
@@ -22,7 +25,7 @@ namespace Repositories
             {
                 if (user == null)
                 {
-                    user = new UserRepository(repoContext);
+                    user = new UserRepository(repoContext, Mapper);
                 }
                 return user;
             }

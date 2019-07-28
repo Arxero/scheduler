@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Contracts;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,12 @@ namespace Scheduler.Controllers
     public class UsersController : ControllerBase
     {
         private IRepositoryWrapper Repository;
+        private readonly IMapper Mapper;
 
-        public UsersController(IRepositoryWrapper repositoryBase)
+        public UsersController(IRepositoryWrapper repositoryBase, IMapper mapper)
         {
             Repository = repositoryBase;
+            Mapper = mapper;
         }
 
 
@@ -26,7 +29,8 @@ namespace Scheduler.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await Repository.User.GetAllUsersAsync();
-            return Ok(users);
+            var mappedUsers = Mapper.Map<IList<UserDto>>(users);
+            return Ok(mappedUsers);
         }
 
         [HttpGet("{id}", Name = "Get")]
@@ -37,31 +41,33 @@ namespace Scheduler.Controllers
             {
                 return NotFound("User with this id does not exist");
             }
-
-            return Ok(user);
+            var mappedUser = Mapper.Map<UserDto>(user);
+            return Ok(mappedUser);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] User user)
+        public async Task<IActionResult> Post([FromBody] UserDto user)
         {
             if (user == null)
             {
                 return BadRequest("User is empty.");
             }
 
-            await Repository.User.AddUserAsync(user);
-            //Repository.Save();
-            return CreatedAtRoute("Get", new { Id = user.UserId }, user);
+            var mappedUser = Mapper.Map<User>(user); // dto to db model
+            mappedUser.CreatedAt = DateTime.Now;
+            await Repository.User.AddUserAsync(mappedUser); // saving db model
+            var userToreturn = Mapper.Map<UserDto>(mappedUser); // db model to dto
+            return CreatedAtRoute("Get", new { Id = userToreturn.UserId }, userToreturn);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] User user)
+        public async Task<IActionResult> Put(int id, [FromBody] UserDto user)
         {
             if (user == null)
             {
                 return BadRequest("User is empty.");
             }
-            User userToUpdate = await Repository.User.GetUserByIdAsync(id);
+            var userToUpdate = await Repository.User.GetUserByIdAsync(id);
 
             if (userToUpdate == null)
             {
@@ -69,7 +75,6 @@ namespace Scheduler.Controllers
             }
 
             await Repository.User.UpdateUserAsync(userToUpdate, user);
-            //Repository.Save();
             return NoContent();
         }
 
@@ -82,7 +87,6 @@ namespace Scheduler.Controllers
                 return NotFound("User with this id does not exist.");
             }
             await Repository.User.DeleteUserAsync(user);
-            //Repository.Save();
             return NoContent();
         }
 

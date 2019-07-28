@@ -1,4 +1,5 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
 using Entities;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +13,10 @@ namespace Repositories
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
-        public UserRepository(RepositoryContext repositoryContext) : base(repositoryContext)
+        private readonly IMapper Mapper;
+        public UserRepository(RepositoryContext repositoryContext, IMapper mapper) : base(repositoryContext)
         {
+            Mapper = mapper;
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
@@ -33,16 +36,13 @@ namespace Repositories
             await SaveAsync();
         }
 
-        public async Task UpdateUserAsync(User dbUser, User newUser)
+        public async Task UpdateUserAsync(User dbUser, UserDto newUser)
         {
-            dbUser.Username = newUser.Username;
-            dbUser.FirstName = newUser.FirstName;
-            dbUser.LastName = newUser.LastName;
-            dbUser.PhoneNumber = newUser.PhoneNumber;
-            dbUser.Email = newUser.Email;
-            dbUser.UpdatedAt = DateTime.Now;
-            dbUser.Gender = newUser.Gender;
-            Update(dbUser);
+            var mappedUser = Mapper.Map<User>(newUser);
+            mappedUser.UserId = dbUser.UserId;
+            mappedUser.CreatedAt = dbUser.CreatedAt;
+            mappedUser.UpdatedAt = DateTime.Now;
+            Update(mappedUser);
             await SaveAsync();
         }
 
