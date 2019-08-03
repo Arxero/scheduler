@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Entities.Migrations
 {
-    [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(SchedulerContext))]
+    partial class SchedulerContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -19,7 +19,7 @@ namespace Entities.Migrations
 
             modelBuilder.Entity("Entities.Models.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedAt");
@@ -38,14 +38,14 @@ namespace Entities.Migrations
 
                     b.Property<string>("Username");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
 
                     b.HasData(
                         new
                         {
-                            UserId = 1,
+                            Id = 1,
                             CreatedAt = new DateTime(2019, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "feruchio599@gmail.com",
                             FirstName = "Maverick",
@@ -57,7 +57,7 @@ namespace Entities.Migrations
                         },
                         new
                         {
-                            UserId = 2,
+                            Id = 2,
                             CreatedAt = new DateTime(2019, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "saad@gmail.com",
                             FirstName = "Saad",
@@ -69,7 +69,7 @@ namespace Entities.Migrations
                         },
                         new
                         {
-                            UserId = 3,
+                            Id = 3,
                             CreatedAt = new DateTime(2019, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "xinoredm@gmail.com",
                             FirstName = "Xinored",
@@ -81,7 +81,7 @@ namespace Entities.Migrations
                         },
                         new
                         {
-                            UserId = 4,
+                            Id = 4,
                             CreatedAt = new DateTime(2019, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "badboy@gmail.com",
                             FirstName = "Badboy",
@@ -93,7 +93,7 @@ namespace Entities.Migrations
                         },
                         new
                         {
-                            UserId = 5,
+                            Id = 5,
                             CreatedAt = new DateTime(2019, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "roller@gmail.com",
                             FirstName = "Roller",

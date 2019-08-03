@@ -28,7 +28,7 @@ namespace Scheduler.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
-            var users = await Repository.User.GetAllUsersAsync();
+            var users = await Repository.User.GetAllAsync();
             var mappedUsers = Mapper.Map<IList<UserDto>>(users);
             return Ok(mappedUsers);
         }
@@ -36,57 +36,30 @@ namespace Scheduler.Controllers
         [HttpGet("{id}", Name = "Get")]
         public async Task<IActionResult> Get(int id)
         {
-            User user = await Repository.User.GetUserByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound("User with this id does not exist");
-            }
+            User user = await Repository.User.GetByIdAsync(id);
             var mappedUser = Mapper.Map<UserDto>(user);
             return Ok(mappedUser);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserDto user)
-        {
-            if (user == null)
-            {
-                return BadRequest("User is empty.");
-            }
-
-            var mappedUser = Mapper.Map<User>(user); // dto to db model
-            mappedUser.CreatedAt = DateTime.Now;
-            await Repository.User.AddUserAsync(mappedUser); // saving db model
-            var userToreturn = Mapper.Map<UserDto>(mappedUser); // db model to dto
-            return CreatedAtRoute("Get", new { Id = userToreturn.UserId }, userToreturn);
+        {    
+            var theUser = await Repository.User.AddAsync(Mapper.Map<User>(user)); // saving db model
+            var userToReturn = Mapper.Map<UserDto>(theUser);
+            return CreatedAtRoute("Get", new { Id = userToReturn.Id }, userToReturn);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] UserDto user)
-        {
-            if (user == null)
-            {
-                return BadRequest("User is empty.");
-            }
-            var userToUpdate = await Repository.User.GetUserByIdAsync(id);
-
-            if (userToUpdate == null)
-            {
-                return NotFound("The user you are trying to edit does not exist.");
-            }
-
-            await Repository.User.UpdateUserAsync(userToUpdate, user);
+        {      
+            await Repository.User.UpdateUserAsync(user);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            User user = await Repository.User.GetUserByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound("User with this id does not exist.");
-            }
-            await Repository.User.DeleteUserAsync(user);
+            await Repository.User.RemoveAsync(id);
             return NoContent();
         }
 

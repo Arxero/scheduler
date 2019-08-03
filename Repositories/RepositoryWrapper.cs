@@ -9,14 +9,14 @@ namespace Repositories
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
-        public RepositoryWrapper(RepositoryContext repositoryContext, IMapper mapper)
+        public RepositoryWrapper(SchedulerContext repositoryContext, IMapper mapper)
         {
             repoContext = repositoryContext;
             Mapper = mapper;
         }
         private readonly IMapper Mapper;
 
-        private RepositoryContext repoContext;
+        private SchedulerContext repoContext;
         private IUserRepository user;
 
         public IUserRepository User
@@ -25,7 +25,7 @@ namespace Repositories
             {
                 if (user == null)
                 {
-                    user = new UserRepository(repoContext, Mapper);
+                    user = new UserRepository(repoContext, repoContext.Users, Mapper);
                 }
                 return user;
             }

@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Entities
 {
-    public class RepositoryContext : DbContext
+    public class SchedulerContext : DbContext
     {
-        public RepositoryContext(DbContextOptions options) : base(options)
+        public SchedulerContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -20,7 +20,7 @@ namespace Entities
             modelBuilder.Entity<User>().HasData(
              new User
              {
-                 UserId = 1,
+                 Id = 1,
                  Username = "Maverick",
                  FirstName = "Maverick",
                  LastName = "Cloud",
@@ -32,7 +32,7 @@ namespace Entities
              },
             new User
             {
-                UserId = 2,
+                Id = 2,
                 Username = "Saad",
                 FirstName = "Saad",
                 LastName = "Salim",
@@ -44,7 +44,7 @@ namespace Entities
             },
             new User
             {
-                UserId = 3,
+                Id = 3,
                 Username = "Xinored",
                 FirstName = "Xinored",
                 LastName = "Deronix",
@@ -56,7 +56,7 @@ namespace Entities
             },
             new User
             {
-                UserId = 4,
+                Id = 4,
                 Username = "Badboy",
                 FirstName = "Badboy",
                 LastName = "Boy",
@@ -68,7 +68,7 @@ namespace Entities
             },
             new User
             {
-                UserId = 5,
+                Id = 5,
                 Username = "Mr.Roller",
                 FirstName = "Roller",
                 LastName = "Rolls",

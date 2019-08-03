@@ -14,8 +14,6 @@ namespace Scheduler
             CreateMap<User, UserDto>();
 
             CreateMap<UserDto, User>();
-                //.ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.Now));
-                //.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
         }
     }
 }

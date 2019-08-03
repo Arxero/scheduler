@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities;
+using Entities.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,12 +38,13 @@ namespace Scheduler.Extensions
         public static void ConfigureMySqlContext(this IServiceCollection services, IConfiguration config)
         {
             var connectionString = config["mysqlconnection:connectionString"];
-            services.AddDbContext<RepositoryContext>(o => o.UseMySql(connectionString));
+            services.AddDbContext<SchedulerContext>(o => o.UseMySql(connectionString));
         }
 
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            //services.AddScoped<IRepositoryBase<User, int>, RepositoryBase<User, int> >();
         }
     }
 }

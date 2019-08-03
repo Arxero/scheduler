@@ -5,11 +5,8 @@ using System.Text;
 
 namespace Entities.Models
 {
-    public class User
+    public class User : Entity<int>
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
-
         public string Username { get; set; }
 
         public string FirstName { get; set; }
@@ -20,10 +17,7 @@ namespace Entities.Models
 
         public string Email { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-
-        public DateTime UpdatedAt { get; set; }
-
         public string Gender { get; set; }
+
     }
 }

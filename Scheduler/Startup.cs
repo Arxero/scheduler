@@ -39,6 +39,7 @@ namespace Scheduler
             services.ConfigureMySqlContext(Configuration); //db settings
             services.ConfigureRepositoryWrapper();
 
+
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -54,7 +55,7 @@ namespace Scheduler
             //swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Scheduler", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "Scheduler API", Version = "v1" });
             });
         }
 
