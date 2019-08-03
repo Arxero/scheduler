@@ -80,45 +80,4 @@ namespace Repositories
         }
     }
 
-    //public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
-    //{
-    //    protected RepositoryContext _repositoryContext { get; set; }
-
-    //    public RepositoryBase(RepositoryContext repositoryContext)
-    //    {
-    //        _repositoryContext = repositoryContext;
-    //    }
-
-    //    public IQueryable<T> GetAll()
-    //    {
-    //        return _repositoryContext.Set<T>().AsNoTracking();
-    //    }
-
-    //    public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
-    //    {
-    //        return _repositoryContext.Set<T>().Where(expression).AsNoTracking();
-    //    }
-
-    //    public void Add(T entity)
-    //    {
-    //        _repositoryContext.Set<T>().Add(entity);
-    //    }
-
-    //    public void Update(T entity)
-    //    {
-    //        _repositoryContext.Set<T>().Update(entity);
-    //    }
-
-    //    public void Delete(T entity)
-    //    {
-    //        _repositoryContext.Set<T>().Remove(entity);
-    //    }
-
-    //    public async Task SaveAsync()
-    //    {
-    //        await _repositoryContext.SaveChangesAsync();
-    //    }
-    //}
-
-
 }
