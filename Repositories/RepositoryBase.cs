@@ -25,10 +25,22 @@ namespace Repositories
         public SchedulerContext Context { get; }
         public DbSet<TEntity> Data { get; }
 
-        public async Task<List<TEntity>> GetAllAsync()
+        public async Task<PagedData<TEntity>> QueryAsync(Paging paging = null)
         {
-            var entities = await Data.ToListAsync();
-            return entities;
+
+            if (paging == null || !paging.IsValid())
+            {
+                paging = Defaults.Paging;
+            }
+
+            var totalCount = await Data.CountAsync();
+            var entities = await Data.Skip(paging.Skip).Take(paging.Take).ToListAsync();
+
+            return new PagedData<TEntity>
+            {
+                Items = entities,
+                Total = totalCount
+            };
         }
 
         public virtual async Task<TEntity> GetByIdAsync(T id)

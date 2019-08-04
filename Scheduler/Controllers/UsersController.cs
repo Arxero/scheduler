@@ -6,6 +6,7 @@ using AutoMapper;
 using Contracts;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Services.Users;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Scheduler.Controllers
 {
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseController
     {
         private IRepositoryWrapper Repository;
         private readonly IMapper Mapper;
@@ -26,11 +27,23 @@ namespace Scheduler.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers([FromQuery] Paging paging = null)
         {
-            var users = await Repository.User.GetAllAsync();
-            var mappedUsers = Mapper.Map<IList<UserDto>>(users);
-            return Ok(mappedUsers);
+            //var users = await Repository.User.QueryAsync(paging);
+            //var mappedUsers = users.Items.Select(x => Mapper.Map<UserDto>(x)).ToList();
+
+            //return new PagedResult<UserDto>
+            //{
+            //    Items = mappedUsers,
+            //    Total = users.Total,
+            //};
+
+            var query = new GetAllUsersQuery()
+            {
+                Paging = paging
+            };
+
+            return Ok(await Mediator.Send(query));
         }
 
         [HttpGet("{id}", Name = "Get")]

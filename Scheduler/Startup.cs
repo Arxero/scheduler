@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -15,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Scheduler.Extensions;
+using Services.Users;
 using Swashbuckle.AspNetCore.Swagger;
 
 
@@ -22,8 +25,6 @@ namespace Scheduler
 {
     public class Startup
     {
-        //http://www.codingflow.net/create-northwind-traders-code-first-with-entity-framework-core-part-1/
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,29 +35,17 @@ namespace Scheduler
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureCors(); // cors
+            services.ConfigureCors();
             services.ConfigureIISIntegration();
-            services.ConfigureMySqlContext(Configuration); //db settings
+            services.ConfigureMySqlContext(Configuration);
             services.ConfigureRepositoryWrapper();
+            services.ConfigureAutoMapper();
+            services.ConfigureSwagger();
 
-
-            // Auto Mapper Configurations
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new MappingProfile());
-            });
-
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
-
+            // Add MediatR
+            services.AddMediatR(typeof(GetAllUsersQuery).GetTypeInfo().Assembly);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            //swagger
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Scheduler API", Version = "v1" });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,16 +61,13 @@ namespace Scheduler
                 app.UseHsts();
             }
 
-
             app.UseCors("CorsPolicy");
-
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.All
             });
 
             app.UseStaticFiles();
-
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
