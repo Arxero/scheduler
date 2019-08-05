@@ -7,6 +7,7 @@ using Contracts;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Services.Users;
+using Services.Users.Commands;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -29,16 +30,7 @@ namespace Scheduler.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUsers([FromQuery] Paging paging = null)
         {
-            //var users = await Repository.User.QueryAsync(paging);
-            //var mappedUsers = users.Items.Select(x => Mapper.Map<UserDto>(x)).ToList();
-
-            //return new PagedResult<UserDto>
-            //{
-            //    Items = mappedUsers,
-            //    Total = users.Total,
-            //};
-
-            var query = new GetAllUsersQuery()
+            var query = new GetAllUsersQuery
             {
                 Paging = paging
             };
@@ -49,30 +41,40 @@ namespace Scheduler.Controllers
         [HttpGet("{id}", Name = "Get")]
         public async Task<IActionResult> Get(int id)
         {
-            User user = await Repository.User.GetByIdAsync(id);
-            var mappedUser = Mapper.Map<UserDto>(user);
-            return Ok(mappedUser);
+            var query = new GetUserByIdQuery
+            {
+                Id = id
+            };        
+            return Ok(await Mediator.Send(query));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserDto user)
-        {    
-            var theUser = await Repository.User.AddAsync(Mapper.Map<User>(user)); // saving db model
-            var userToReturn = Mapper.Map<UserDto>(theUser);
-            return CreatedAtRoute("Get", new { Id = userToReturn.Id }, userToReturn);
+        public async Task<ActionResult<UserDto>> Post([FromBody] UserDto model)
+        {
+            var command = new CreateUserCommand
+            {
+                Model = model
+            };
+            var theUser = await Mediator.Send(command);
+            return theUser;
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] UserDto user)
-        {      
-            await Repository.User.UpdateUserAsync(user);
+        public async Task<IActionResult> Put(int id, [FromBody] UserDto model)
+        {
+            var command = new UpdateUserCommand
+            {
+                Model = model
+            };
+
+            await Mediator.Send(command);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await Repository.User.RemoveAsync(id);
+            await Mediator.Send(new DeleteUserCommand { Id = id });
             return NoContent();
         }
 
