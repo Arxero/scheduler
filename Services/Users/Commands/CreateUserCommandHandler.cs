@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.Models;
+using Entities.Validators;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,14 @@ namespace Services.Users.Commands
 
         public async Task<UserDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
+            UserValidator validator = new UserValidator();
+            var validatorResults = validator.Validate(request.Model);
+
+            if (validatorResults.IsValid == false)
+            {
+                throw new ArgumentNullException(nameof(request.Model));
+            }
+
             var theUser = await Repository.User.AddAsync(Mapper.Map<User>(request.Model)); // saving db model
             var userToReturn = Mapper.Map<UserDto>(theUser);
             return userToReturn;

@@ -60,15 +60,16 @@ namespace Scheduler.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] UserDto model)
+        public async Task<ActionResult<UserDto>> Put(int id, [FromBody] UserDto model)
         {
             var command = new UpdateUserCommand
             {
-                Model = model
+                Model = model,
+                Id = id
             };
 
-            await Mediator.Send(command);
-            return NoContent();
+            var theUser = await Mediator.Send(command);
+            return theUser;
         }
 
         [HttpDelete("{id}")]

@@ -19,7 +19,8 @@ using Microsoft.Extensions.Options;
 using Scheduler.Extensions;
 using Services.Users;
 using Swashbuckle.AspNetCore.Swagger;
-
+using FluentValidation.AspNetCore;
+using Entities.Validators;
 
 namespace Scheduler
 {
@@ -45,7 +46,15 @@ namespace Scheduler
             // Add MediatR
             services.AddMediatR(typeof(GetAllUsersQuery).GetTypeInfo().Assembly);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // Add Fluent Validation
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddFluentValidation(fv => 
+                {
+                    fv.RegisterValidatorsFromAssemblyContaining<UserValidator>();
+                    //fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

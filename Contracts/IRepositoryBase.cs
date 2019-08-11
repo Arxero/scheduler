@@ -15,7 +15,7 @@ namespace Contracts
         Task<PagedData<TEntity>> QueryAsync(Paging paging = null);
         Task<TEntity> GetByIdAsync(T id);
         Task<TEntity> AddAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity);
         Task RemoveAsync(T entity);
 
     }

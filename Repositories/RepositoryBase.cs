@@ -46,7 +46,6 @@ namespace Repositories
         public virtual async Task<TEntity> GetByIdAsync(T id)
         {
             var entity = await Data.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
-
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
@@ -69,7 +68,7 @@ namespace Repositories
             return entity;
         }
 
-        public virtual Task UpdateAsync(TEntity entity)
+        public virtual async Task<TEntity> UpdateAsync(TEntity entity)
         {
 
             if (entity == null)
@@ -79,7 +78,8 @@ namespace Repositories
 
             entity.UpdatedAt = DateTime.UtcNow;
             Data.Update(entity);
-            return Task.CompletedTask;
+            await Context.SaveChangesAsync();
+            return entity;
         }
 
         public virtual Task RemoveAsync(T id)

@@ -20,19 +20,24 @@ namespace Repositories
 
         private readonly IMapper Mapper;
 
+        //public SchedulerContext UsersContext()
+        //{
+        //    return Context;
+        //}
+
         //public Task DeleteUserAsync(int id)
         //{
         //    var entity = new TEntity();
         //    base.RemoveAsync(theUser);
         //}
 
-        public Task UpdateUserAsync(UserDto user)
-        {
-            var theUser = Mapper.Map<User>(user);
-            base.UpdateAsync(theUser);
-            Context.SaveChanges();
-            return Task.CompletedTask;
-        }
+        //public Task UpdateUserAsync(UserDto user)
+        //{
+        //    var theUser = Mapper.Map<User>(user);
+        //    base.UpdateAsync(theUser);
+        //    Context.SaveChanges();
+        //    return Task.CompletedTask;
+        //}
     }
 
     //public class UserRepository : RepositoryBase<User>, IUserRepository
